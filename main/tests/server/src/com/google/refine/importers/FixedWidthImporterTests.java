@@ -107,4 +107,17 @@ public class FixedWidthImporterTests extends ImporterTest {
         Assert.assertNull(project.rows.get(2).getCellValue(2));
     }
 
+    //Tests for CS427 Issue link: https://github.com/OpenRefine/OpenRefine/issues/4197
+    @Test
+    public void ReadContexts(){
+        Project project = new Project();
+        //List<ObjectNode> results = new ArrayList<ObjectNode>();
+        List<ObjectNode> contexts = new ArrayList<ObjectNode>();
+        contexts.add("restaurant");
+        contexts.add("dinner");
+        ImporterUtilities.setupColumns(project, contexts);
+        Assert.assertEquals( project.contexts.getName(), "restaurant" );
+        Assert.assertEquals( project.contexts.getName(), "dinner" );
+        results.assertEquals( project.results.getContext(), "restaurant", "dinner" )
+    }
 }

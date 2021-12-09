@@ -144,6 +144,7 @@ public class ImporterUtilitiesTests extends RefineTest {
         Assert.assertEquals(columnNames.size(), 4);
     }
 
+    //Tests for CS427 Issue link: https://github.com/OpenRefine/OpenRefine/issues/4197
     @Test
     public void setupColumns(){
         Project project = new Project();

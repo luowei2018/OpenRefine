@@ -145,7 +145,8 @@ public class ImportingJob  {
             return JSONUtilities.getObject(config,"retrievalRecord");
         }
     }
-    
+
+    // CS427 Issue link: https://github.com/OpenRefine/OpenRefine/issues/4197
     @JsonIgnore
     public List<ObjectNode> getSelectedFileRecords() {
         List<ObjectNode> results = new ArrayList<ObjectNode>();
@@ -172,19 +173,6 @@ public class ImportingJob  {
         return results;
     }
 
-    @Test
-    public void ReadContexts(){
-        Project project = new Project();
-        //List<ObjectNode> results = new ArrayList<ObjectNode>();
-        List<ObjectNode> contexts = new ArrayList<ObjectNode>();
-        contexts.add("restaurant");
-        contexts.add("dinner");
-        ImporterUtilities.setupColumns(project, contexts);
-        Assert.assertEquals( project.contexts.getName(), "restaurant" );
-        Assert.assertEquals( project.contexts.getName(), "dinner" );
-        results.assertEquals( project.results.getContext(), "restaurant", "dinner" )
-    }
-    
     public void touch() {
         lastTouched = System.currentTimeMillis();
     }
