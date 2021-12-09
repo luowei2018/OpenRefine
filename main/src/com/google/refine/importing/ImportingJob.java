@@ -149,9 +149,11 @@ public class ImportingJob  {
     @JsonIgnore
     public List<ObjectNode> getSelectedFileRecords() {
         List<ObjectNode> results = new ArrayList<ObjectNode>();
+        List<ObjectNode> contexts = new ArrayList<ObjectNode>();
         
         ObjectNode retrievalRecord = JSONUtilities.getObject(config,"retrievalRecord");
-        if (retrievalRecord != null) {
+        ObjectNode contextOfRetrieval = JSONUtilities.getObject(config,"contextOfRetrieval");
+        if (retrievalRecord != null && contextOfRetrieval != null) {
             ArrayNode fileRecordArray = JSONUtilities.getArray(retrievalRecord, "files");
             if (fileRecordArray != null) {
                 ArrayNode fileSelectionArray = JSONUtilities.getArray(config,"fileSelection");
@@ -160,6 +162,8 @@ public class ImportingJob  {
                         int index = JSONUtilities.getIntElement(fileSelectionArray, i, -1);
                         if (index >= 0 && index < fileRecordArray.size()) {
                             results.add(JSONUtilities.getObjectElement(fileRecordArray, index));
+                            contexts.add(JSONUtilities.getObjectElement(fileRecordArray - 1, index))
+                            contexts.add(JSONUtilities.getObjectElement(fileRecordArray + 1, index))
                         }
                     }
                 }
@@ -168,6 +172,18 @@ public class ImportingJob  {
         return results;
     }
 
+    @Test
+    public void ReadContexts(){
+        Project project = new Project();
+        //List<ObjectNode> results = new ArrayList<ObjectNode>();
+        List<ObjectNode> contexts = new ArrayList<ObjectNode>();
+        contexts.add("restaurant");
+        contexts.add("dinner");
+        ImporterUtilities.setupColumns(project, contexts);
+        Assert.assertEquals( project.contexts.getName(), "restaurant" );
+        Assert.assertEquals( project.contexts.getName(), "dinner" );
+        results.assertEquals( project.results.getContext(), "restaurant", "dinner" )
+    }
     
     public void touch() {
         lastTouched = System.currentTimeMillis();

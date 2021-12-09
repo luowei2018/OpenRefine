@@ -157,6 +157,7 @@ public class ImporterUtilitiesTests extends RefineTest {
         Assert.assertEquals( project.columnModel.columns.get(2).getName(), "Column");
     }
 
+
     @Test
     public void testGetOrAllocateColumn(){
         Project project = new Project();
